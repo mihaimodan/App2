@@ -6,14 +6,23 @@ lat = data["LAT"].to_list()
 lon = data["LON"].to_list()
 elev = data["ELEV"].to_list()
 
-map = folium.Map(location = [43, 25], zoom_start = 6, tiles = "OpenStreetMap" ) #Current location when writing this
+#create a function that sets conditionals for later use in marker color.
+def color_marker(elevation):     
+    if elevation < 1000:
+        return "green"  
+    elif 1000 <= elevation < 3000:
+        return "orange"
+    else:
+        return "red"
+    
+map = folium.Map(location = [38, -99], zoom_start = 6, tiles = "OpenStreetMap" ) #Current location when writing this
 
-fg = folium.FeatureGroup(name = "My Map")
+fg = folium.FeatureGroup(name = "My Map") #FeatureGroup acts as a layer.
 
 #Personalizing the map object with .add_child. Adding a marker.
 
 for lt, ln, elv in zip(lat, lon, elev):
-    fg.add_child(folium.Marker(location = [lt, ln], popup = "Elevation: %s" %elv, icon =folium.Icon(color = "green")))
+    fg.add_child(folium.CircleMarker(location = [lt, ln], radius = 6, popup = "Elevation: %s m" %elv, fill_color = color_marker(elv), color = "grey", fill= True, fill_opacity = 0.7))
 
 map.add_child(fg)
 
