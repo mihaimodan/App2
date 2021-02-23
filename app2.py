@@ -17,8 +17,8 @@ def color_marker(elevation):
 
 map = folium.Map(location = [38, -99], zoom_start = 6, tiles = "OpenStreetMap" ) #This gives us the initial location, zoom level, map background when opening the html.
 
-fg1 = folium.FeatureGroup(name = "My Map") #FeatureGroup acts as a layer.
-fg2 = folium.FeatureGroup(name = "Population Density Overlay")
+fg1 = folium.FeatureGroup(name = "Volcanoes") #FeatureGroup acts as a layer.
+fg2 = folium.FeatureGroup(name = "Population Density")
 
 #Personalizing the map object with .add_child. Adding circle markers.
 for lt, ln, elv in zip(lat, lon, elev):
@@ -30,4 +30,5 @@ fg2.add_child(folium.GeoJson(data=open('world.json', 'r', encoding = "utf-8-sig"
 
 map.add_child(fg1)
 map.add_child(fg2)
-map.save("Map test.html")   
+map.add_child(folium.LayerControl())
+map.save("Map.html")   
